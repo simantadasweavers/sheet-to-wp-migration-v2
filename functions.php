@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // LOCAL VARIABLES FOR COLUMN ID's
 $SHEET_POST_ID_COLUMN = NULL;
@@ -33,10 +32,6 @@ $SHEET_POST_META_BOX_23_COLUMN = NULL;
 $SHEET_POST_META_BOX_24_COLUMN = NULL;
 $SHEET_POST_META_BOX_25_COLUMN = NULL;
 $SHEET_POST_META_BOX_26_COLUMN = NULL;
-$SHEET_POST_META_BOX_27_COLUMN = NULL;
-$SHEET_POST_META_BOX_28_COLUMN = NULL;
-$SHEET_POST_META_BOX_29_COLUMN = NULL;
-$SHEET_POST_META_BOX_30_COLUMN = NULL;
 
 
 
@@ -64,11 +59,34 @@ function save_settings()
     $post_type = sanitize_text_field($_POST['post_type']);
     $post_category = sanitize_text_field($_POST['category']);
     $post_tag_name = sanitize_text_field($_POST['tag_name']);
+
     $field1 = sanitize_text_field($_POST['field1']);
     $field2 = sanitize_text_field($_POST['field2']);
     $field3 = sanitize_text_field($_POST['field3']);
     $field4 = sanitize_text_field($_POST['field4']);
     $field5 = sanitize_text_field($_POST['field5']);
+    $field6 = sanitize_text_field($_POST['field6']);
+    $field7 = sanitize_text_field($_POST['field7']);
+    $field8 = sanitize_text_field($_POST['field8']);
+    $field9 = sanitize_text_field($_POST['field9']);
+    $field10 = sanitize_text_field($_POST['field10']);
+    $field11 = sanitize_text_field($_POST['field11']);
+    $field12 = sanitize_text_field($_POST['field12']);
+    $field13 = sanitize_text_field($_POST['field13']);
+    $field14 = sanitize_text_field($_POST['field14']);
+    $field15 = sanitize_text_field($_POST['field15']);
+    $field16 = sanitize_text_field($_POST['field16']);
+    $field17 = sanitize_text_field($_POST['field17']);
+    $field18 = sanitize_text_field($_POST['field18']);
+    $field19 = sanitize_text_field($_POST['field19']);
+    $field20 = sanitize_text_field($_POST['field20']);
+    $field21 = sanitize_text_field($_POST['field21']);
+    $field22 = sanitize_text_field($_POST['field22']);
+    $field23 = sanitize_text_field($_POST['field23']);
+    $field24 = sanitize_text_field($_POST['field24']);
+    $field25 = sanitize_text_field($_POST['field25']);
+    $field26 = sanitize_text_field($_POST['field26']);
+    
 
     /**** checking google sheet connection ****/
     try {
@@ -663,30 +681,38 @@ function fetch_taxonomoes()
 }
 
 
-try {
-    add_action('wp_ajax_fetch_acf_fields', 'fetch_acf_fields');
-    function fetch_acf_fields()
-    {
-        $post_type = sanitize_text_field($_POST['post_type']);
+add_action('wp_ajax_fetch_acf_fields', 'fetch_acf_fields');
+function fetch_acf_fields()
+{
+    // Ensure the post_type is provided
+    if (!isset($_POST['post_type'])) {
+        wp_send_json_error('Post type not specified.');
+        wp_die();
+    }
 
-        $return_arr = array();
+    $post_type = sanitize_text_field($_POST['post_type']);
+    $return_arr = array();
 
-        // Get ACF field groups for the current post type
-        $field_groups = acf_get_field_groups(array('post_type' => $post_type));
-        if ($field_groups) {
-            foreach ($field_groups as $field_group) {
-                // Get fields in the current field group , ex: post custom fields, home page etc.
-                $fields = acf_get_fields($field_group['ID']);
-                if ($fields) {
-                    foreach ($fields as $field) {
-                        array_push($return_arr, array('label' => $field['label'], 'name' => $field['name']));
-                    }
+    // Retrieve ACF field groups for the selected post type
+    $field_groups = acf_get_field_groups(array('post_type' => $post_type));
+    if ($field_groups) {
+        foreach ($field_groups as $field_group) {
+            $fields = acf_get_fields($field_group['ID']);
+            if ($fields) {
+                foreach ($fields as $field) {
+                    $return_arr[] = array(
+                        'label' => $field['label'],
+                        'name' => $field['name']
+                    );
                 }
             }
         }
-        wp_send_json_success($return_arr);
-        wp_die();
     }
-} catch (Exception $e) {
-    echo $e->getMessage();
+
+    if (empty($return_arr)) {
+        wp_send_json_error("No fields found for this post type.");
+    } else {
+        wp_send_json_success($return_arr);
+    }
+    wp_die();
 }

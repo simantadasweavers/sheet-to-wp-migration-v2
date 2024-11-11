@@ -9,9 +9,37 @@ $args = array(
 );
 
 $custom_post_types = get_post_types($args, 'names');
-
 // Add the 'post' type to the array
 $post_types = array_merge(array('post'), $custom_post_types);
+
+$int_to_letter = [
+  '1' => 'a',
+  '2' => 'b',
+  '3' => 'c',
+  '4' => 'd',
+  '5' => 'e',
+  '6' => 'f',
+  '7' => 'g',
+  '8' => 'h',
+  '9' => 'i',
+  '10' => 'j',
+  '11' => 'k',
+  '12' => 'l',
+  '13' => 'm',
+  '14' => 'n',
+  '15' => 'o',
+  '16' => 'p',
+  '17' => 'q',
+  '18' => 'r',
+  '19' => 's',
+  '20' => 't',
+  '21' => 'u',
+  '22' => 'v',
+  '23' => 'w',
+  '24' => 'x',
+  '25' => 'y',
+  '26' => 'z'
+];
 
 ?>
 <!doctype html>
@@ -66,64 +94,334 @@ $post_types = array_merge(array('post'), $custom_post_types);
         </div>
 
         <div class="mb-3">
-          <label for="post-type" class="form-label">Post Type</label>
-          <select class="form-select" id="post-type" aria-label="Default select example">
+          <label for="post-id-column" class="form-label">Sheet Post ID Column</label>
+          <select class="form-select" id="post-id-column" required>
             <?php
-            foreach ($post_types as $post_type) {
+            $i = 1;
+            $prefix = NULL;
+            while ($i <= 26) {
+              switch ($i) {
+                case 1:
+                  $prefix = "st";
+                  break;
+                case 2:
+                  $prefix = "nd";
+                  break;
+                case 3:
+                  $prefix = "rd";
+                  break;
+                default:
+                  $prefix = "th";
+                  break;
+              }
               ?>
-              <option value="<?php echo $post_type; ?>"><?php echo $post_type; ?></option>
-            <?php } ?>
+              <option value="<?php echo $i; ?>">
+                <?php echo $i . "$prefix column (" . strtoupper($int_to_letter[$i]) . ")"; ?>
+              </option>
+              <?php $i++;
+            } ?>
           </select>
         </div>
 
         <div class="mb-3">
-          <label for="cateory-name" class="form-label">Category</label>
-          <select class="form-select" id="cateory-name">
-            <option>Select Category</option>
+          <label for="post-id-column" class="form-label">Sheet Post Title Column</label>
+          <select class="form-select" id="post-title-column" required>
+            <?php
+            $i = 1;
+            $prefix = NULL;
+            while ($i <= 26) {
+              switch ($i) {
+                case 1:
+                  $prefix = "st";
+                  break;
+                case 2:
+                  $prefix = "nd";
+                  break;
+                case 3:
+                  $prefix = "rd";
+                  break;
+                default:
+                  $prefix = "th";
+                  break;
+              }
+              ?>
+              <option value="<?php echo $i; ?>">
+                <?php echo $i . "$prefix column (" . strtoupper($int_to_letter[$i]) . ")"; ?>
+              </option>
+              <?php $i++;
+            } ?>
           </select>
         </div>
 
+
         <div class="mb-3">
-          <label for="tag-name" class="form-label">Tags</label>
-          <select class="form-select" id="tag-name" aria-label="Default select example">
-            <option>Select Tags</option>
+          <label for="post-id-column" class="form-label">Sheet Post Content Column</label>
+          <select class="form-select" id="post-content-column" required>
+            <?php
+            $i = 1;
+            $prefix = NULL;
+            while ($i <= 26) {
+              switch ($i) {
+                case 1:
+                  $prefix = "st";
+                  break;
+                case 2:
+                  $prefix = "nd";
+                  break;
+                case 3:
+                  $prefix = "rd";
+                  break;
+                default:
+                  $prefix = "th";
+                  break;
+              }
+              ?>
+              <option value="<?php echo $i; ?>">
+                <?php echo $i . "$prefix column (" . strtoupper($int_to_letter[$i]) . ")"; ?>
+              </option>
+              <?php $i++;
+            } ?>
           </select>
         </div>
 
-        <div class="mb-3">
-          <label for="tag-name" class="form-label">Custom Field 1</label>
-          <select class="form-select" id="custom-field-1" aria-label="Default select example">
-            <option>Select Tags</option>
-          </select>
+        <div class="row">
+          <div class="col-6">
+            <label for="post-type" class="form-label">Post Type</label>
+            <select class="form-select" id="post-type" aria-label="Default select example">
+              <?php
+              foreach ($post_types as $post_type) {
+                ?>
+                <option value="<?php echo $post_type; ?>"><?php echo $post_type; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="col-6">
+            <label for="post-type" class="form-label">Sheet Post Type Column</label>
+            <select class="form-select" id="post-type-column" aria-label="select google sheet post id column" required>
+              <?php
+              $i = 1;
+              $prefix = NULL;
+              while ($i <= 26) {
+                switch ($i) {
+                  case 1:
+                    $prefix = "st";
+                    break;
+                  case 2:
+                    $prefix = "nd";
+                    break;
+                  case 3:
+                    $prefix = "rd";
+                    break;
+                  default:
+                    $prefix = "th";
+                    break;
+                }
+                ?>
+                <option value="<?php echo $i; ?>">
+                  <?php echo $i . "$prefix column (" . strtoupper($int_to_letter[$i]) . ")"; ?>
+                </option>
+                <?php $i++;
+              } ?>
+            </select>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label for="tag-name" class="form-label">Custom Field 2</label>
-          <select class="form-select" id="custom-field-2" aria-label="Default select example">
-            <option>Select Tags</option>
-          </select>
+        <br>
+
+        <div class="row">
+          <div class="col-6">
+            <label for="cateory-name" class="form-label">Category</label>
+            <select class="form-select" id="cateory-name">
+              <option>Select Category</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label for="post-type" class="form-label">Sheet Post Category Column</label>
+            <select class="form-select" id="post-category-column" aria-label="select google sheet post category column"
+              required>
+              <?php
+              $i = 1;
+              $prefix = NULL;
+              while ($i <= 26) {
+                switch ($i) {
+                  case 1:
+                    $prefix = "st";
+                    break;
+                  case 2:
+                    $prefix = "nd";
+                    break;
+                  case 3:
+                    $prefix = "rd";
+                    break;
+                  default:
+                    $prefix = "th";
+                    break;
+                }
+                ?>
+                <option value="<?php echo $i; ?>">
+                  <?php echo $i . "$prefix column (" . strtoupper($int_to_letter[$i]) . ")"; ?>
+                </option>
+                <?php $i++;
+              } ?>
+            </select>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label for="tag-name" class="form-label">Custom Field 3</label>
-          <select class="form-select" id="custom-field-3" aria-label="Default select example">
-            <option>Select Tags</option>
-          </select>
+        <br>
+
+        <div class="row">
+          <div class="col-6">
+            <label for="tag-name" class="form-label">Tags</label>
+            <select class="form-select" id="tag-name" aria-label="Default select example">
+              <option>Select Tags</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label for="post-type" class="form-label">Sheet Post Tags Column</label>
+            <select class="form-select" id="post-tags-column" aria-label="select google sheet post tags column"
+              required>
+              <?php
+              $i = 1;
+              $prefix = NULL;
+              while ($i <= 26) {
+                switch ($i) {
+                  case 1:
+                    $prefix = "st";
+                    break;
+                  case 2:
+                    $prefix = "nd";
+                    break;
+                  case 3:
+                    $prefix = "rd";
+                    break;
+                  default:
+                    $prefix = "th";
+                    break;
+                }
+                ?>
+                <option value="<?php echo $i; ?>"><?php echo $i . "$prefix column"; ?></option>
+                <?php $i++;
+              } ?>
+            </select>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label for="tag-name" class="form-label">Custom Field 4</label>
-          <select class="form-select" id="custom-field-4" aria-label="Default select example">
-            <option>Select Tags</option>
-          </select>
+        <br>
+
+        <div id="section-container">
         </div>
 
-        <div class="mb-3">
-          <label for="tag-name" class="form-label">Custom Field 5</label>
-          <select class="form-select" id="custom-field-5" aria-label="Default select example">
-            <option>Select Tags</option>
-          </select>
-        </div>
+        <!-- Button to add new section -->
+        <button type="button" id="add-section-btn">Add Custom Field</button>
+
+        <script>
+          let fieldCount = 0;
+          let maxFields = 26;
+          const intToLetter = {
+            1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E', 6: 'F', 7: 'G', 8: 'H', 9: 'I', 10: 'J',
+            11: 'K', 12: 'L', 13: 'M', 14: 'N', 15: 'O', 16: 'P', 17: 'Q', 18: 'R', 19: 'S', 20: 'T',
+            21: 'U', 22: 'V', 23: 'W', 24: 'X', 25: 'Y', 26: 'Z'
+          };
+
+          document.getElementById('add-section-btn').addEventListener('click', function () {
+            if (fieldCount >= maxFields) {
+              alert("Maximum of 26 custom fields reached.");
+              return;
+            }
+
+            const postType = document.getElementById('post-type').value;
+            if (!postType) {
+              alert("Please select a post type.");
+              return;
+            }
+
+            const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+            const formData2 = new FormData();
+            formData2.append('action', 'fetch_acf_fields');
+            formData2.append('post_type', postType);
+
+            jQuery.ajax({
+              type: "POST",
+              url: ajaxurl,
+              data: formData2,
+              processData: false,
+              contentType: false,
+              success: function (response) {
+                if (response.data && response.success) {
+                  fieldCount++;
+
+                  const newRow = document.createElement('div');
+                  newRow.classList.add('row', 'mb-3');
+
+                  // Left column for the custom field
+                  const customFieldCol = document.createElement('div');
+                  customFieldCol.classList.add('col-6');
+
+                  const newLabel = document.createElement('label');
+                  newLabel.classList.add('form-label');
+                  newLabel.setAttribute('for', `custom-field-${fieldCount}`);
+                  newLabel.textContent = `Custom Field ${fieldCount}`;
+
+                  const newSelect = document.createElement('select');
+                  newSelect.classList.add('form-select');
+                  newSelect.setAttribute('id', `custom-field-${fieldCount}`);
+                  newSelect.setAttribute('aria-label', 'Custom Field Options');
+
+                  const placeholderOption = document.createElement('option');
+                  placeholderOption.textContent = 'Select Field';
+                  placeholderOption.value = '';
+                  newSelect.appendChild(placeholderOption);
+
+                  response.data.forEach(function (field) {
+                    const option = document.createElement('option');
+                    option.value = field.name;
+                    option.textContent = field.label;
+                    newSelect.appendChild(option);
+                  });
+
+                  customFieldCol.appendChild(newLabel);
+                  customFieldCol.appendChild(newSelect);
+
+                  // Right column for the "Sheet Post Category Column"
+                  const categoryCol = document.createElement('div');
+                  categoryCol.classList.add('col-6');
+
+                  const categoryLabel = document.createElement('label');
+                  categoryLabel.classList.add('form-label');
+                  categoryLabel.setAttribute('for', `custom-field-column-${fieldCount}`);
+                  categoryLabel.textContent = 'Sheet Post Category Column';
+
+                  const categorySelect = document.createElement('select');
+                  categorySelect.classList.add('form-select');
+                  categorySelect.setAttribute('id', `custom-field-column-${fieldCount}`);
+                  categorySelect.setAttribute('aria-label', 'Select Google Sheet Post Category Column');
+                  categorySelect.required = true;
+
+                  for (let i = 1; i <= 26; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    const prefix = i === 1 ? 'st' : i === 2 ? 'nd' : i === 3 ? 'rd' : 'th';
+                    option.textContent = `${i}${prefix} column (${intToLetter[i]})`;
+                    categorySelect.appendChild(option);
+                  }
+
+                  categoryCol.appendChild(categoryLabel);
+                  categoryCol.appendChild(categorySelect);
+
+                  // Append columns to the new row, then append row to the section container
+                  newRow.appendChild(customFieldCol);
+                  newRow.appendChild(categoryCol);
+                  document.getElementById('section-container').appendChild(newRow);
+                } else {
+                  alert("No fields found for the selected post type.");
+                }
+              },
+              error: function (response) {
+                console.error("Error fetching meta fields:", response);
+              }
+            });
+          });
+        </script>
 
 
         <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
@@ -171,7 +469,8 @@ $post_types = array_merge(array('post'), $custom_post_types);
       <br>
       <br>
 
-      <h3>Step 3: Make sure your Google Sheet Maintain These column ordering ... (Note: Leave the first row of the sheet) </h3>
+      <h3>Step 3: Make sure your Google Sheet Maintain These column ordering ... (Note: Leave the first row of the
+        sheet) </h3>
 
       <table class="table">
         <thead>
@@ -199,7 +498,8 @@ $post_types = array_merge(array('post'), $custom_post_types);
 
       <br>
 
-      <h3>Step 5: Enable Google Sheet API in Projet. <br/> Go to: Api & Services > Enable Api Services > Search Google Sheet Api. Now enable it. </h3>
+      <h3>Step 5: Enable Google Sheet API in Projet. <br /> Go to: Api & Services > Enable Api Services > Search Google
+        Sheet Api. Now enable it. </h3>
 
     </div>
     <div class="col-2"></div>
@@ -277,18 +577,10 @@ $post_types = array_merge(array('post'), $custom_post_types);
         let name = jQuery('#post-type').val();
         jQuery('#cateory-name').empty();
         jQuery('#tag-name').empty();
-        jQuery('#custom-field-1').empty();
-        jQuery('#custom-field-2').empty();
-        jQuery('#custom-field-3').empty();
-        jQuery('#custom-field-4').empty();
-        jQuery('#custom-field-5').empty();
 
         let formData = new FormData();
-        let formData2 = new FormData();
         formData.append('action', 'fetch_taxonomoes'); // Add action for AJAX
         formData.append('post_type', name); // Add action for AJAX
-        formData2.append('action', 'fetch_acf_fields'); // Add action for AJAX
-        formData2.append('post_type', name); // Add action for AJAX
 
         jQuery.ajax({
           type: "POST",
@@ -324,43 +616,6 @@ $post_types = array_merge(array('post'), $custom_post_types);
           }
         });
 
-        jQuery.ajax({
-          type: "POST",
-          url: ajaxurl,
-          data: formData2,
-          processData: false,
-          contentType: false,
-          success: function (response) {
-            if (response.data) {
-              let data = response.data;
-
-              let optionHTML = `
-                <option value=""> 
-                None 
-                </option>`;
-              jQuery('#custom-field-1').append(optionHTML);
-              jQuery('#custom-field-2').append(optionHTML);
-              jQuery('#custom-field-3').append(optionHTML);
-              jQuery('#custom-field-4').append(optionHTML);
-              jQuery('#custom-field-5').append(optionHTML);
-
-              data.forEach(function (data) {
-                let optionHTML = `
-                  <option value="${data.name}"> 
-                      ${data.label} 
-                  </option>`;
-                jQuery('#custom-field-1').append(optionHTML);
-                jQuery('#custom-field-2').append(optionHTML);
-                jQuery('#custom-field-3').append(optionHTML);
-                jQuery('#custom-field-4').append(optionHTML);
-                jQuery('#custom-field-5').append(optionHTML);
-              });
-            }
-          },
-          error: function (response) {
-            console.error(response);
-          }
-        });
       }
 
       // fetch defaults category and tags against default post type select.
@@ -368,11 +623,13 @@ $post_types = array_merge(array('post'), $custom_post_types);
         let name = jQuery(this).val();
         jQuery('#cateory-name').empty();
         jQuery('#tag-name').empty();
-        jQuery('#custom-field-1').empty();
-        jQuery('#custom-field-2').empty();
-        jQuery('#custom-field-3').empty();
-        jQuery('#custom-field-4').empty();
-        jQuery('#custom-field-5').empty();
+
+        let i = 0;
+        while (i <= 26) {
+          jQuery(`#custom-field-${i}`).empty();
+          i++;
+        }
+
 
         let formData = new FormData();
         let formData2 = new FormData();
@@ -389,7 +646,6 @@ $post_types = array_merge(array('post'), $custom_post_types);
           contentType: false,
           success: function (response) {
             let data = response.data;
-
             let optionHTML = `
             <option value=""> 
             None 
@@ -422,33 +678,29 @@ $post_types = array_merge(array('post'), $custom_post_types);
             let data = response.data;
 
             let optionHTML = `
-            <option value=""> 
-            None 
-            </option>`;
-            jQuery('#custom-field-1').append(optionHTML);
-            jQuery('#custom-field-2').append(optionHTML);
-            jQuery('#custom-field-3').append(optionHTML);
-            jQuery('#custom-field-4').append(optionHTML);
-            jQuery('#custom-field-5').append(optionHTML);
+            <option>None</option>`;
+            i = 0;
+            while (i <= 26) {
+              jQuery(`#custom-field-${i}`).append(optionHTML);
+              i++;
+            }
 
             data.forEach(function (data) {
+              i = 0;
               let optionHTML = `
             <option value="${data.name}"> 
                 ${data.label} 
             </option>`;
-              jQuery('#custom-field-1').append(optionHTML);
-              jQuery('#custom-field-2').append(optionHTML);
-              jQuery('#custom-field-3').append(optionHTML);
-              jQuery('#custom-field-4').append(optionHTML);
-              jQuery('#custom-field-5').append(optionHTML);
+              while (i <= 26) {
+                jQuery(`#custom-field-${i}`).append(optionHTML);
+                i++;
+              }
             });
-
           },
           error: function (response) {
             console.error(response);
           }
         });
-
       });
 
 
@@ -474,11 +726,69 @@ $post_types = array_merge(array('post'), $custom_post_types);
               const postType = document.getElementById('post-type').value;
               const category = document.getElementById('cateory-name').value;
               const tag_name = document.getElementById('tag-name').value;
-              const field1 = document.getElementById('custom-field-1').value;
-              const field2 = document.getElementById('custom-field-2').value;
-              const field3 = document.getElementById('custom-field-3').value;
-              const field4 = document.getElementById('custom-field-4').value;
-              const field5 = document.getElementById('custom-field-5').value;
+
+              try {
+                const field1 = document.getElementById('custom-field-1').value;
+                const field2 = document.getElementById('custom-field-2').value;
+                const field3 = document.getElementById('custom-field-3').value;
+                const field4 = document.getElementById('custom-field-4').value;
+                const field5 = document.getElementById('custom-field-5').value;
+                const field6 = document.getElementById('custom-field-6').value;
+                const field7 = document.getElementById('custom-field-7').value;
+                const field8 = document.getElementById('custom-field-8').value;
+                const field9 = document.getElementById('custom-field-9').value;
+                const field10 = document.getElementById('custom-field-10').value;
+                const field11 = document.getElementById('custom-field-11').value;
+                const field12 = document.getElementById('custom-field-12').value;
+                const field13 = document.getElementById('custom-field-13').value;
+                const field14 = document.getElementById('custom-field-14').value;
+                const field15 = document.getElementById('custom-field-15').value;
+                const field16 = document.getElementById('custom-field-16').value;
+                const field17 = document.getElementById('custom-field-17').value;
+                const field18 = document.getElementById('custom-field-18').value;
+                const field19 = document.getElementById('custom-field-19').value;
+                const field20 = document.getElementById('custom-field-20').value;
+                const field21 = document.getElementById('custom-field-21').value;
+                const field22 = document.getElementById('custom-field-22').value;
+                const field23 = document.getElementById('custom-field-23').value;
+                const field24 = document.getElementById('custom-field-24').value;
+                const field25 = document.getElementById('custom-field-25').value;
+                const field26 = document.getElementById('custom-field-26').value;
+              } catch (err) {
+                console.error(err.message);
+              }
+
+              try {
+                const column1 = document.getElementById('custom-field-column-1').value;
+                const column2 = document.getElementById('custom-field-column-2').value;
+                const column3 = document.getElementById('custom-field-column-3').value;
+                const column4 = document.getElementById('custom-field-column-4').value;
+                const column5 = document.getElementById('custom-field-column-5').value;
+                const column6 = document.getElementById('custom-field-column-6').value;
+                const column7 = document.getElementById('custom-field-column-7').value;
+                const column8 = document.getElementById('custom-field-column-8').value;
+                const column9 = document.getElementById('custom-field-column-9').value;
+                const column10 = document.getElementById('custom-field-column-10').value;
+                const column11 = document.getElementById('custom-field-column-11').value;
+                const column12 = document.getElementById('custom-field-column-12').value;
+                const column13 = document.getElementById('custom-field-column-13').value;
+                const column14 = document.getElementById('custom-field-column-14').value;
+                const column15 = document.getElementById('custom-field-column-15').value;
+                const column16 = document.getElementById('custom-field-column-16').value;
+                const column17 = document.getElementById('custom-field-column-17').value;
+                const column18 = document.getElementById('custom-field-column-18').value;
+                const column19 = document.getElementById('custom-field-column-19').value;
+                const column20 = document.getElementById('custom-field-column-20').value;
+                const column21 = document.getElementById('custom-field-column-21').value;
+                const column22 = document.getElementById('custom-field-column-22').value;
+                const column23 = document.getElementById('custom-field-column-23').value;
+                const column24 = document.getElementById('custom-field-column-24').value;
+                const column25 = document.getElementById('custom-field-column-25').value;
+                const column26 = document.getElementById('custom-field-column-26').value;
+              } catch (err) {
+                console.error(err);
+              }
+
 
               // Create FormData object and append data
               let formData = new FormData();
@@ -499,11 +809,68 @@ $post_types = array_merge(array('post'), $custom_post_types);
               formData.append('category', category);
               formData.append('tag_name', tag_name);
 
-              formData.append('field1', field1);
+              try{
+                formData.append('field1', field1);
               formData.append('field2', field2);
               formData.append('field3', field3);
               formData.append('field4', field4);
               formData.append('field5', field5);
+              formData.append('field6', field6);
+              formData.append('field7', field7);
+              formData.append('field8', field8);
+              formData.append('field9', field9);
+              formData.append('field10', field10);
+              formData.append('field11', field11);
+              formData.append('field12', field12);
+              formData.append('field13', field13);
+              formData.append('field14', field14);
+              formData.append('field15', field15);
+              formData.append('field16', field16);
+              formData.append('field17', field17);
+              formData.append('field18', field18);
+              formData.append('field19', field19);
+              formData.append('field20', field20);
+              formData.append('field21', field21);
+              formData.append('field22', field22);
+              formData.append('field23', field23);
+              formData.append('field24', field24);
+              formData.append('field25', field25);
+              formData.append('field26', field26);
+              }catch(err){
+                console.error(err);
+              }
+
+              try{
+                formData.append('column1', column1);
+              formData.append('column2', column2);
+              formData.append('column3', column3);
+              formData.append('column4', column4);
+              formData.append('column5', column5);
+              formData.append('column6', column6);
+              formData.append('column7', column7);
+              formData.append('column8', column8);
+              formData.append('column9', column9);
+              formData.append('column10', column10);
+              formData.append('column11', column11);
+              formData.append('column12', column12);
+              formData.append('column13', column13);
+              formData.append('column14', column14);
+              formData.append('column15', column15);
+              formData.append('column16', column16);
+              formData.append('column17', column17);
+              formData.append('column18', column18);
+              formData.append('column19', column19);
+              formData.append('column20', column20);
+              formData.append('column21', column21);
+              formData.append('column22', column22);
+              formData.append('column23', column23);
+              formData.append('column24', column24);
+              formData.append('column25', column25);
+              formData.append('column26', column26);
+              }catch(err){
+                console.error(err);
+              }
+
               formData.append('action', 'save_settings'); // Add action for AJAX
 
               // Now, make the AJAX request
@@ -521,9 +888,7 @@ $post_types = array_merge(array('post'), $custom_post_types);
                     $_SESSION['auth_token_status'] = "connected";
                     ?>
                     jQuery('#myForm')[0].reset();
-
                     location.reload();
-
                   } else {
                     alert("Error in Google Spreadsheet ID or Auth.json file");
                   }

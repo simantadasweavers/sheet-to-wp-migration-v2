@@ -106,3 +106,5 @@ PROBLEMS STILL =>
 [REQUIRED PLUGIN: CRON JOBS ARIEL: https://wordpress.org/plugins/leira-cron-jobs/#can%20i%20manage%20wordpress%20schedules%3F]
 ========================================================================================
 
+NEED IMPROVEMENT ==>
+EXCERPT TEXT in post, thumbnail image etc. 
