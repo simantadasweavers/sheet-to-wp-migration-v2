@@ -56,37 +56,76 @@ function save_settings()
     $client_x509_cert_url = esc_url_raw($_POST['client_x509_cert_url']);
     $universe_domain = sanitize_text_field($_POST['universe_domain']);
     $cron_time = sanitize_text_field($_POST['cron_time']);
+    $post_id_column = sanitize_text_field($_POST['post_id_column']);
+    $post_title_column = sanitize_text_field($_POST['post_title_column']);
+    $post_content_column = sanitize_text_field($_POST['post_content_column']);
     $post_type = sanitize_text_field($_POST['post_type']);
     $post_category = sanitize_text_field($_POST['category']);
     $post_tag_name = sanitize_text_field($_POST['tag_name']);
 
-    $field1 = sanitize_text_field($_POST['field1']);
-    $field2 = sanitize_text_field($_POST['field2']);
-    $field3 = sanitize_text_field($_POST['field3']);
-    $field4 = sanitize_text_field($_POST['field4']);
-    $field5 = sanitize_text_field($_POST['field5']);
-    $field6 = sanitize_text_field($_POST['field6']);
-    $field7 = sanitize_text_field($_POST['field7']);
-    $field8 = sanitize_text_field($_POST['field8']);
-    $field9 = sanitize_text_field($_POST['field9']);
-    $field10 = sanitize_text_field($_POST['field10']);
-    $field11 = sanitize_text_field($_POST['field11']);
-    $field12 = sanitize_text_field($_POST['field12']);
-    $field13 = sanitize_text_field($_POST['field13']);
-    $field14 = sanitize_text_field($_POST['field14']);
-    $field15 = sanitize_text_field($_POST['field15']);
-    $field16 = sanitize_text_field($_POST['field16']);
-    $field17 = sanitize_text_field($_POST['field17']);
-    $field18 = sanitize_text_field($_POST['field18']);
-    $field19 = sanitize_text_field($_POST['field19']);
-    $field20 = sanitize_text_field($_POST['field20']);
-    $field21 = sanitize_text_field($_POST['field21']);
-    $field22 = sanitize_text_field($_POST['field22']);
-    $field23 = sanitize_text_field($_POST['field23']);
-    $field24 = sanitize_text_field($_POST['field24']);
-    $field25 = sanitize_text_field($_POST['field25']);
-    $field26 = sanitize_text_field($_POST['field26']);
-    
+    try {
+        $field1 = sanitize_text_field($_POST['field1']);
+        $field2 = sanitize_text_field($_POST['field2']);
+        $field3 = sanitize_text_field($_POST['field3']);
+        $field4 = sanitize_text_field($_POST['field4']);
+        $field5 = sanitize_text_field($_POST['field5']);
+        $field6 = sanitize_text_field($_POST['field6']);
+        $field7 = sanitize_text_field($_POST['field7']);
+        $field8 = sanitize_text_field($_POST['field8']);
+        $field9 = sanitize_text_field($_POST['field9']);
+        $field10 = sanitize_text_field($_POST['field10']);
+        $field11 = sanitize_text_field($_POST['field11']);
+        $field12 = sanitize_text_field($_POST['field12']);
+        $field13 = sanitize_text_field($_POST['field13']);
+        $field14 = sanitize_text_field($_POST['field14']);
+        $field15 = sanitize_text_field($_POST['field15']);
+        $field16 = sanitize_text_field($_POST['field16']);
+        $field17 = sanitize_text_field($_POST['field17']);
+        $field18 = sanitize_text_field($_POST['field18']);
+        $field19 = sanitize_text_field($_POST['field19']);
+        $field20 = sanitize_text_field($_POST['field20']);
+        $field21 = sanitize_text_field($_POST['field21']);
+        $field22 = sanitize_text_field($_POST['field22']);
+        $field23 = sanitize_text_field($_POST['field23']);
+        $field24 = sanitize_text_field($_POST['field24']);
+        $field25 = sanitize_text_field($_POST['field25']);
+        $field26 = sanitize_text_field($_POST['field26']);
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
+    try {
+        $column1 = sanitize_text_field($_POST['column1']);
+        $column2 = sanitize_text_field($_POST['column2']);
+        $column3 = sanitize_text_field($_POST['column3']);
+        $column4 = sanitize_text_field($_POST['column4']);
+        $column5 = sanitize_text_field($_POST['column5']);
+        $column6 = sanitize_text_field($_POST['column6']);
+        $column7 = sanitize_text_field($_POST['column7']);
+        $column8 = sanitize_text_field($_POST['column8']);
+        $column9 = sanitize_text_field($_POST['column9']);
+        $column10 = sanitize_text_field($_POST['column10']);
+        $column11 = sanitize_text_field($_POST['column11']);
+        $column12 = sanitize_text_field($_POST['column12']);
+        $column13 = sanitize_text_field($_POST['column13']);
+        $column14 = sanitize_text_field($_POST['column14']);
+        $column15 = sanitize_text_field($_POST['column15']);
+        $column16 = sanitize_text_field($_POST['column16']);
+        $column17 = sanitize_text_field($_POST['column17']);
+        $column18 = sanitize_text_field($_POST['column18']);
+        $column19 = sanitize_text_field($_POST['column19']);
+        $column20 = sanitize_text_field($_POST['column20']);
+        $column21 = sanitize_text_field($_POST['column21']);
+        $column22 = sanitize_text_field($_POST['column22']);
+        $column23 = sanitize_text_field($_POST['column23']);
+        $column24 = sanitize_text_field($_POST['column24']);
+        $column25 = sanitize_text_field($_POST['column25']);
+        $column26 = sanitize_text_field($_POST['column26']);
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
+    // echo $column1."  ".$field1;
 
     /**** checking google sheet connection ****/
     try {
@@ -141,6 +180,9 @@ function save_settings()
         'client_x509_cert_url' => $client_x509_cert_url,
         'universe_domain' => $universe_domain,
         'cron_job_time' => $cron_time,
+        'post_id_column' => $post_id_column,
+        'post_title_column' => $post_title_column,
+        'post_content_column' => $post_content_column,
         'post_type' => $post_type,
         'post_category' => $post_category,
         'post_tag' => $post_tag_name,
@@ -149,6 +191,53 @@ function save_settings()
         "meta_box_3" => $field3,
         "meta_box_4" => $field4,
         "meta_box_5" => $field5,
+        "meta_box_6" => $field6,
+        "meta_box_7" => $field7,
+        "meta_box_8" => $field8,
+        "meta_box_9" => $field9,
+        "meta_box_10" => $field10,
+        "meta_box_11" => $field11,
+        "meta_box_12" => $field12,
+        "meta_box_13" => $field13,
+        "meta_box_14" => $field14,
+        "meta_box_15" => $field15,
+        "meta_box_16" => $field16,
+        "meta_box_17" => $field17,
+        "meta_box_18" => $field18,
+        "meta_box_19" => $field19,
+        "meta_box_20" => $field20,
+        "meta_box_21" => $field21,
+        "meta_box_22" => $field22,
+        "meta_box_23" => $field23,
+        "meta_box_24" => $field24,
+        "meta_box_25" => $field25,
+        "meta_box_26" => $field26,
+        "meta_box_1_column" => $column1,
+        "meta_box_2_column" => $column2,
+        "meta_box_3_column" => $column3,
+        "meta_box_4_column" => $column4,
+        "meta_box_5_column" => $column5,
+        "meta_box_6_column" => $column6,
+        "meta_box_7_column" => $column7,
+        "meta_box_8_column" => $column8,
+        "meta_box_9_column" => $column9,
+        "meta_box_10_column" => $column10,
+        "meta_box_11_column" => $column11,
+        "meta_box_12_column" => $column12,
+        "meta_box_13_column" => $column13,
+        "meta_box_14_column" => $column14,
+        "meta_box_15_column" => $column15,
+        "meta_box_16_column" => $column16,
+        "meta_box_17_column" => $column17,
+        "meta_box_18_column" => $column18,
+        "meta_box_19_column" => $column19,
+        "meta_box_20_column" => $column20,
+        "meta_box_21_column" => $column21,
+        "meta_box_22_column" => $column22,
+        "meta_box_23_column" => $column23,
+        "meta_box_24_column" => $column24,
+        "meta_box_25_column" => $column25,
+        "meta_box_26_column" => $column26,
         'created_at' => date('d-m-Y H:i:s')
     );
 

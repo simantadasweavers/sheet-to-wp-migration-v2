@@ -51,7 +51,6 @@ try {
            `post_title_column` varchar(5) NULL,
            `post_content_column` varchar(5) NULL,  
           `post_type` varchar(10) NULL,
-          `post_type_column` varchar(5) NULL,
           `post_category` varchar(30) NULL,
           `post_category_column` varchar(5) NULL,
           `post_tag` varchar(30) NULL,

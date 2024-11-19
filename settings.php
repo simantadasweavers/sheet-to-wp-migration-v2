@@ -184,46 +184,15 @@ $int_to_letter = [
           </select>
         </div>
 
-        <div class="row">
-          <div class="col-6">
-            <label for="post-type" class="form-label">Post Type</label>
-            <select class="form-select" id="post-type" aria-label="Default select example">
-              <?php
-              foreach ($post_types as $post_type) {
-                ?>
-                <option value="<?php echo $post_type; ?>"><?php echo $post_type; ?></option>
-              <?php } ?>
-            </select>
-          </div>
-          <div class="col-6">
-            <label for="post-type" class="form-label">Sheet Post Type Column</label>
-            <select class="form-select" id="post-type-column" aria-label="select google sheet post id column" required>
-              <?php
-              $i = 1;
-              $prefix = NULL;
-              while ($i <= 26) {
-                switch ($i) {
-                  case 1:
-                    $prefix = "st";
-                    break;
-                  case 2:
-                    $prefix = "nd";
-                    break;
-                  case 3:
-                    $prefix = "rd";
-                    break;
-                  default:
-                    $prefix = "th";
-                    break;
-                }
-                ?>
-                <option value="<?php echo $i; ?>">
-                  <?php echo $i . "$prefix column (" . strtoupper($int_to_letter[$i]) . ")"; ?>
-                </option>
-                <?php $i++;
-              } ?>
-            </select>
-          </div>
+        <div class="mb-3">
+          <label for="post-type" class="form-label">Post Type</label>
+          <select class="form-select" id="post-type" aria-label="Default select example">
+            <?php
+            foreach ($post_types as $post_type) {
+              ?>
+              <option value="<?php echo $post_type; ?>"><?php echo $post_type; ?></option>
+            <?php } ?>
+          </select>
         </div>
 
         <br>
@@ -236,9 +205,10 @@ $int_to_letter = [
             </select>
           </div>
           <div class="col-6">
-            <label for="post-type" class="form-label">Sheet Post Category Column</label>
+            <label for="post-category-column" class="form-label">Sheet Post Category Column</label>
             <select class="form-select" id="post-category-column" aria-label="select google sheet post category column"
               required>
+              <option>None</option>
               <?php
               $i = 1;
               $prefix = NULL;
@@ -277,9 +247,10 @@ $int_to_letter = [
             </select>
           </div>
           <div class="col-6">
-            <label for="post-type" class="form-label">Sheet Post Tags Column</label>
+            <label for="post-tags-column" class="form-label">Sheet Post Tags Column</label>
             <select class="form-select" id="post-tags-column" aria-label="select google sheet post tags column"
               required>
+              <option>None</option>
               <?php
               $i = 1;
               $prefix = NULL;
@@ -324,19 +295,14 @@ $int_to_letter = [
           };
 
           document.getElementById('add-section-btn').addEventListener('click', function () {
-            if (fieldCount >= maxFields) {
+          if (fieldCount >= maxFields) {
               alert("Maximum of 26 custom fields reached.");
               return;
             }
 
-            const postType = document.getElementById('post-type').value;
-            if (!postType) {
-              alert("Please select a post type.");
-              return;
-            }
-
+            let postType = document.getElementById('post-type').value;
             const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
-            const formData2 = new FormData();
+            let formData2 = new FormData();
             formData2.append('action', 'fetch_acf_fields');
             formData2.append('post_type', postType);
 
@@ -387,14 +353,29 @@ $int_to_letter = [
                   categoryCol.classList.add('col-6');
 
                   const categoryLabel = document.createElement('label');
+                  let prefix = null;
+                  switch (fieldCount) {
+                    case 1:
+                      prefix = "st";
+                      break;
+                    case 2:
+                      prefix = "nd";
+                      break;
+                    case 3:
+                      prefix = "rd";
+                      break;
+                    default:
+                      prefix = "th";
+                      break;
+                  }
                   categoryLabel.classList.add('form-label');
                   categoryLabel.setAttribute('for', `custom-field-column-${fieldCount}`);
-                  categoryLabel.textContent = 'Sheet Post Category Column';
+                  categoryLabel.textContent = `Sheet ${fieldCount}${prefix} Custom Field Column`;
 
                   const categorySelect = document.createElement('select');
                   categorySelect.classList.add('form-select');
                   categorySelect.setAttribute('id', `custom-field-column-${fieldCount}`);
-                  categorySelect.setAttribute('aria-label', 'Select Google Sheet Post Category Column');
+                  categorySelect.setAttribute('aria-label', 'Select Google Sheet Custom Field Column');
                   categorySelect.required = true;
 
                   for (let i = 1; i <= 26; i++) {
@@ -709,6 +690,8 @@ $int_to_letter = [
       jQuery('#submit-btn').on('click', function (e) {
         e.preventDefault(); // Prevent default form submission
 
+        console.warn(document.getElementById('custom-field-1').value + "  "+ document.getElementById('custom-field-column-1').value);
+
         // checkFields();
 
         // Get the JSON file
@@ -720,76 +703,69 @@ $int_to_letter = [
           // When the file is read, process the JSON data
           reader.onload = function (e) {
             try {
-              const jsonData = JSON.parse(e.target.result);
-              let url = document.getElementById('sheet_url').value;
-              const cronTime = document.getElementById('cron-time').value;
-              const postType = document.getElementById('post-type').value;
-              const category = document.getElementById('cateory-name').value;
-              const tag_name = document.getElementById('tag-name').value;
+              let jsonData = JSON.parse(e.target.result);
+let url = document.getElementById('sheet_url').value;
+let cronTime = document.getElementById('cron-time').value;
+let post_id_column = document.getElementById('post-id-column').value;
+let post_title_column = document.getElementById('post-title-column').value;
+let post_content_column = document.getElementById('post-content-column').value;
+let postType = document.getElementById('post-type').value;
+let category = document.getElementById('cateory-name').value;
+let tag_name = document.getElementById('tag-name').value;
+let field1 = document.getElementById('custom-field-1') ? document.getElementById('custom-field-1').value : '';
+let field2 = document.getElementById('custom-field-2') ? document.getElementById('custom-field-2').value : '';
+let field3 = document.getElementById('custom-field-3') ? document.getElementById('custom-field-3').value : '';
+let field4 = document.getElementById('custom-field-4') ? document.getElementById('custom-field-4').value : '';
+let field5 = document.getElementById('custom-field-5') ? document.getElementById('custom-field-5').value : '';
+let field6 = document.getElementById('custom-field-6') ? document.getElementById('custom-field-6').value : '';
+let field7 = document.getElementById('custom-field-7') ? document.getElementById('custom-field-7').value : '';
+let field8 = document.getElementById('custom-field-8') ? document.getElementById('custom-field-8').value : '';
+let field9 = document.getElementById('custom-field-9') ? document.getElementById('custom-field-9').value : '';
+let field10 = document.getElementById('custom-field-10') ? document.getElementById('custom-field-10').value : '';
+let field11 = document.getElementById('custom-field-11') ? document.getElementById('custom-field-11').value : '';
+let field12 = document.getElementById('custom-field-12') ? document.getElementById('custom-field-12').value : '';
+let field13 = document.getElementById('custom-field-13') ? document.getElementById('custom-field-13').value : '';
+let field14 = document.getElementById('custom-field-14') ? document.getElementById('custom-field-14').value : '';
+let field15 = document.getElementById('custom-field-15') ? document.getElementById('custom-field-15').value : '';
+let field16 = document.getElementById('custom-field-16') ? document.getElementById('custom-field-16').value : '';
+let field17 = document.getElementById('custom-field-17') ? document.getElementById('custom-field-17').value : '';
+let field18 = document.getElementById('custom-field-18') ? document.getElementById('custom-field-18').value : '';
+let field19 = document.getElementById('custom-field-19') ? document.getElementById('custom-field-19').value : '';
+let field20 = document.getElementById('custom-field-20') ? document.getElementById('custom-field-20').value : '';
+let field21 = document.getElementById('custom-field-21') ? document.getElementById('custom-field-21').value : '';
+let field22 = document.getElementById('custom-field-22') ? document.getElementById('custom-field-22').value : '';
+let field23 = document.getElementById('custom-field-23') ? document.getElementById('custom-field-23').value : '';
+let field24 = document.getElementById('custom-field-24') ? document.getElementById('custom-field-24').value : '';
+let field25 = document.getElementById('custom-field-25') ? document.getElementById('custom-field-25').value : '';
+let field26 = document.getElementById('custom-field-26') ? document.getElementById('custom-field-26').value : '';
+let column1 = document.getElementById('custom-field-column-1') ? document.getElementById('custom-field-column-1').value : '';
+let column2 = document.getElementById('custom-field-column-2') ? document.getElementById('custom-field-column-2').value : '';
+let column3 = document.getElementById('custom-field-column-3') ? document.getElementById('custom-field-column-3').value : '';
+let column4 = document.getElementById('custom-field-column-4') ? document.getElementById('custom-field-column-4').value : '';
+let column5 = document.getElementById('custom-field-column-5') ? document.getElementById('custom-field-column-5').value : '';
+let column6 = document.getElementById('custom-field-column-6') ? document.getElementById('custom-field-column-6').value : '';
+let column7 = document.getElementById('custom-field-column-7') ? document.getElementById('custom-field-column-7').value : '';
+let column8 = document.getElementById('custom-field-column-8') ? document.getElementById('custom-field-column-8').value : '';
+let column9 = document.getElementById('custom-field-column-9') ? document.getElementById('custom-field-column-9').value : '';
+let column10 = document.getElementById('custom-field-column-10') ? document.getElementById('custom-field-column-10').value : '';
+let column11 = document.getElementById('custom-field-column-11') ? document.getElementById('custom-field-column-11').value : '';
+let column12 = document.getElementById('custom-field-column-12') ? document.getElementById('custom-field-column-12').value : '';
+let column13 = document.getElementById('custom-field-column-13') ? document.getElementById('custom-field-column-13').value : '';
+let column14 = document.getElementById('custom-field-column-14') ? document.getElementById('custom-field-column-14').value : '';
+let column15 = document.getElementById('custom-field-column-15') ? document.getElementById('custom-field-column-15').value : '';
+let column16 = document.getElementById('custom-field-column-16') ? document.getElementById('custom-field-column-16').value : '';
+let column17 = document.getElementById('custom-field-column-17') ? document.getElementById('custom-field-column-17').value : '';
+let column18 = document.getElementById('custom-field-column-18') ? document.getElementById('custom-field-column-18').value : '';
+let column19 = document.getElementById('custom-field-column-19') ? document.getElementById('custom-field-column-19').value : '';
+let column20 = document.getElementById('custom-field-column-20') ? document.getElementById('custom-field-column-20').value : '';
+let column21 = document.getElementById('custom-field-column-21') ? document.getElementById('custom-field-column-21').value : '';
+let column22 = document.getElementById('custom-field-column-22') ? document.getElementById('custom-field-column-22').value : '';
+let column23 = document.getElementById('custom-field-column-23') ? document.getElementById('custom-field-column-23').value : '';
+let column24 = document.getElementById('custom-field-column-24') ? document.getElementById('custom-field-column-24').value : '';
+let column25 = document.getElementById('custom-field-column-25') ? document.getElementById('custom-field-column-25').value : '';
+let column26 = document.getElementById('custom-field-column-26') ? document.getElementById('custom-field-column-26').value : '';
 
-              try {
-                const field1 = document.getElementById('custom-field-1').value;
-                const field2 = document.getElementById('custom-field-2').value;
-                const field3 = document.getElementById('custom-field-3').value;
-                const field4 = document.getElementById('custom-field-4').value;
-                const field5 = document.getElementById('custom-field-5').value;
-                const field6 = document.getElementById('custom-field-6').value;
-                const field7 = document.getElementById('custom-field-7').value;
-                const field8 = document.getElementById('custom-field-8').value;
-                const field9 = document.getElementById('custom-field-9').value;
-                const field10 = document.getElementById('custom-field-10').value;
-                const field11 = document.getElementById('custom-field-11').value;
-                const field12 = document.getElementById('custom-field-12').value;
-                const field13 = document.getElementById('custom-field-13').value;
-                const field14 = document.getElementById('custom-field-14').value;
-                const field15 = document.getElementById('custom-field-15').value;
-                const field16 = document.getElementById('custom-field-16').value;
-                const field17 = document.getElementById('custom-field-17').value;
-                const field18 = document.getElementById('custom-field-18').value;
-                const field19 = document.getElementById('custom-field-19').value;
-                const field20 = document.getElementById('custom-field-20').value;
-                const field21 = document.getElementById('custom-field-21').value;
-                const field22 = document.getElementById('custom-field-22').value;
-                const field23 = document.getElementById('custom-field-23').value;
-                const field24 = document.getElementById('custom-field-24').value;
-                const field25 = document.getElementById('custom-field-25').value;
-                const field26 = document.getElementById('custom-field-26').value;
-              } catch (err) {
-                console.error(err.message);
-              }
-
-              try {
-                const column1 = document.getElementById('custom-field-column-1').value;
-                const column2 = document.getElementById('custom-field-column-2').value;
-                const column3 = document.getElementById('custom-field-column-3').value;
-                const column4 = document.getElementById('custom-field-column-4').value;
-                const column5 = document.getElementById('custom-field-column-5').value;
-                const column6 = document.getElementById('custom-field-column-6').value;
-                const column7 = document.getElementById('custom-field-column-7').value;
-                const column8 = document.getElementById('custom-field-column-8').value;
-                const column9 = document.getElementById('custom-field-column-9').value;
-                const column10 = document.getElementById('custom-field-column-10').value;
-                const column11 = document.getElementById('custom-field-column-11').value;
-                const column12 = document.getElementById('custom-field-column-12').value;
-                const column13 = document.getElementById('custom-field-column-13').value;
-                const column14 = document.getElementById('custom-field-column-14').value;
-                const column15 = document.getElementById('custom-field-column-15').value;
-                const column16 = document.getElementById('custom-field-column-16').value;
-                const column17 = document.getElementById('custom-field-column-17').value;
-                const column18 = document.getElementById('custom-field-column-18').value;
-                const column19 = document.getElementById('custom-field-column-19').value;
-                const column20 = document.getElementById('custom-field-column-20').value;
-                const column21 = document.getElementById('custom-field-column-21').value;
-                const column22 = document.getElementById('custom-field-column-22').value;
-                const column23 = document.getElementById('custom-field-column-23').value;
-                const column24 = document.getElementById('custom-field-column-24').value;
-                const column25 = document.getElementById('custom-field-column-25').value;
-                const column26 = document.getElementById('custom-field-column-26').value;
-              } catch (err) {
-                console.error(err);
-              }
-
-
+             
               // Create FormData object and append data
               let formData = new FormData();
               formData.append('sheet_url', extractSheetId(url));
@@ -805,73 +781,77 @@ $int_to_letter = [
               formData.append('client_x509_cert_url', jsonData.client_x509_cert_url);
               formData.append('universe_domain', jsonData.universe_domain);
               formData.append('cron_time', cronTime); // Append CRON job time
-              formData.append('post_type', postType); // Append post type
+              formData.append('post_id_column', post_id_column);
+              formData.append('post_title_column', post_title_column);
+              formData.append('post_content_column', post_content_column);
+              formData.append('post_type', postType);
               formData.append('category', category);
               formData.append('tag_name', tag_name);
 
-              try{
+              try {
                 formData.append('field1', field1);
-              formData.append('field2', field2);
-              formData.append('field3', field3);
-              formData.append('field4', field4);
-              formData.append('field5', field5);
-              formData.append('field6', field6);
-              formData.append('field7', field7);
-              formData.append('field8', field8);
-              formData.append('field9', field9);
-              formData.append('field10', field10);
-              formData.append('field11', field11);
-              formData.append('field12', field12);
-              formData.append('field13', field13);
-              formData.append('field14', field14);
-              formData.append('field15', field15);
-              formData.append('field16', field16);
-              formData.append('field17', field17);
-              formData.append('field18', field18);
-              formData.append('field19', field19);
-              formData.append('field20', field20);
-              formData.append('field21', field21);
-              formData.append('field22', field22);
-              formData.append('field23', field23);
-              formData.append('field24', field24);
-              formData.append('field25', field25);
-              formData.append('field26', field26);
-              }catch(err){
+                formData.append('field2', field2);
+                formData.append('field3', field3);
+                formData.append('field4', field4);
+                formData.append('field5', field5);
+                formData.append('field6', field6);
+                formData.append('field7', field7);
+                formData.append('field8', field8);
+                formData.append('field9', field9);
+                formData.append('field10', field10);
+                formData.append('field11', field11);
+                formData.append('field12', field12);
+                formData.append('field13', field13);
+                formData.append('field14', field14);
+                formData.append('field15', field15);
+                formData.append('field16', field16);
+                formData.append('field17', field17);
+                formData.append('field18', field18);
+                formData.append('field19', field19);
+                formData.append('field20', field20);
+                formData.append('field21', field21);
+                formData.append('field22', field22);
+                formData.append('field23', field23);
+                formData.append('field24', field24);
+                formData.append('field25', field25);
+                formData.append('field26', field26);
+              } catch (err) {
                 console.error(err);
               }
 
-              try{
+              try {
                 formData.append('column1', column1);
-              formData.append('column2', column2);
-              formData.append('column3', column3);
-              formData.append('column4', column4);
-              formData.append('column5', column5);
-              formData.append('column6', column6);
-              formData.append('column7', column7);
-              formData.append('column8', column8);
-              formData.append('column9', column9);
-              formData.append('column10', column10);
-              formData.append('column11', column11);
-              formData.append('column12', column12);
-              formData.append('column13', column13);
-              formData.append('column14', column14);
-              formData.append('column15', column15);
-              formData.append('column16', column16);
-              formData.append('column17', column17);
-              formData.append('column18', column18);
-              formData.append('column19', column19);
-              formData.append('column20', column20);
-              formData.append('column21', column21);
-              formData.append('column22', column22);
-              formData.append('column23', column23);
-              formData.append('column24', column24);
-              formData.append('column25', column25);
-              formData.append('column26', column26);
-              }catch(err){
+                formData.append('column2', column2);
+                formData.append('column3', column3);
+                formData.append('column4', column4);
+                formData.append('column5', column5);
+                formData.append('column6', column6);
+                formData.append('column7', column7);
+                formData.append('column8', column8);
+                formData.append('column9', column9);
+                formData.append('column10', column10);
+                formData.append('column11', column11);
+                formData.append('column12', column12);
+                formData.append('column13', column13);
+                formData.append('column14', column14);
+                formData.append('column15', column15);
+                formData.append('column16', column16);
+                formData.append('column17', column17);
+                formData.append('column18', column18);
+                formData.append('column19', column19);
+                formData.append('column20', column20);
+                formData.append('column21', column21);
+                formData.append('column22', column22);
+                formData.append('column23', column23);
+                formData.append('column24', column24);
+                formData.append('column25', column25);
+                formData.append('column26', column26);
+              } catch (err) {
                 console.error(err);
               }
 
-              formData.append('action', 'save_settings'); // Add action for AJAX
+              // Add action for AJAX
+              formData.append('action', 'save_settings');
 
               // Now, make the AJAX request
               jQuery.ajax({
@@ -881,11 +861,10 @@ $int_to_letter = [
                 processData: false,
                 contentType: false,
                 success: function (response) {
-
                   if (response.success) {
                     alert("Settings saved successfully!");
                     <?php
-                    $_SESSION['auth_token_status'] = "connected";
+                    //$_SESSION['auth_token_status'] = "connected";
                     ?>
                     jQuery('#myForm')[0].reset();
                     location.reload();
