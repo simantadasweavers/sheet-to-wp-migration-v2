@@ -295,7 +295,7 @@ $int_to_letter = [
           };
 
           document.getElementById('add-section-btn').addEventListener('click', function () {
-          if (fieldCount >= maxFields) {
+            if (fieldCount >= maxFields) {
               alert("Maximum of 26 custom fields reached.");
               return;
             }
@@ -690,7 +690,7 @@ $int_to_letter = [
       jQuery('#submit-btn').on('click', function (e) {
         e.preventDefault(); // Prevent default form submission
 
-        console.warn(document.getElementById('custom-field-1').value + "  "+ document.getElementById('custom-field-column-1').value);
+        console.warn(document.getElementById('custom-field-1').value + "  " + document.getElementById('custom-field-column-1').value);
 
         // checkFields();
 
@@ -704,68 +704,70 @@ $int_to_letter = [
           reader.onload = function (e) {
             try {
               let jsonData = JSON.parse(e.target.result);
-let url = document.getElementById('sheet_url').value;
-let cronTime = document.getElementById('cron-time').value;
-let post_id_column = document.getElementById('post-id-column').value;
-let post_title_column = document.getElementById('post-title-column').value;
-let post_content_column = document.getElementById('post-content-column').value;
-let postType = document.getElementById('post-type').value;
-let category = document.getElementById('cateory-name').value;
-let tag_name = document.getElementById('tag-name').value;
-let field1 = document.getElementById('custom-field-1') ? document.getElementById('custom-field-1').value : '';
-let field2 = document.getElementById('custom-field-2') ? document.getElementById('custom-field-2').value : '';
-let field3 = document.getElementById('custom-field-3') ? document.getElementById('custom-field-3').value : '';
-let field4 = document.getElementById('custom-field-4') ? document.getElementById('custom-field-4').value : '';
-let field5 = document.getElementById('custom-field-5') ? document.getElementById('custom-field-5').value : '';
-let field6 = document.getElementById('custom-field-6') ? document.getElementById('custom-field-6').value : '';
-let field7 = document.getElementById('custom-field-7') ? document.getElementById('custom-field-7').value : '';
-let field8 = document.getElementById('custom-field-8') ? document.getElementById('custom-field-8').value : '';
-let field9 = document.getElementById('custom-field-9') ? document.getElementById('custom-field-9').value : '';
-let field10 = document.getElementById('custom-field-10') ? document.getElementById('custom-field-10').value : '';
-let field11 = document.getElementById('custom-field-11') ? document.getElementById('custom-field-11').value : '';
-let field12 = document.getElementById('custom-field-12') ? document.getElementById('custom-field-12').value : '';
-let field13 = document.getElementById('custom-field-13') ? document.getElementById('custom-field-13').value : '';
-let field14 = document.getElementById('custom-field-14') ? document.getElementById('custom-field-14').value : '';
-let field15 = document.getElementById('custom-field-15') ? document.getElementById('custom-field-15').value : '';
-let field16 = document.getElementById('custom-field-16') ? document.getElementById('custom-field-16').value : '';
-let field17 = document.getElementById('custom-field-17') ? document.getElementById('custom-field-17').value : '';
-let field18 = document.getElementById('custom-field-18') ? document.getElementById('custom-field-18').value : '';
-let field19 = document.getElementById('custom-field-19') ? document.getElementById('custom-field-19').value : '';
-let field20 = document.getElementById('custom-field-20') ? document.getElementById('custom-field-20').value : '';
-let field21 = document.getElementById('custom-field-21') ? document.getElementById('custom-field-21').value : '';
-let field22 = document.getElementById('custom-field-22') ? document.getElementById('custom-field-22').value : '';
-let field23 = document.getElementById('custom-field-23') ? document.getElementById('custom-field-23').value : '';
-let field24 = document.getElementById('custom-field-24') ? document.getElementById('custom-field-24').value : '';
-let field25 = document.getElementById('custom-field-25') ? document.getElementById('custom-field-25').value : '';
-let field26 = document.getElementById('custom-field-26') ? document.getElementById('custom-field-26').value : '';
-let column1 = document.getElementById('custom-field-column-1') ? document.getElementById('custom-field-column-1').value : '';
-let column2 = document.getElementById('custom-field-column-2') ? document.getElementById('custom-field-column-2').value : '';
-let column3 = document.getElementById('custom-field-column-3') ? document.getElementById('custom-field-column-3').value : '';
-let column4 = document.getElementById('custom-field-column-4') ? document.getElementById('custom-field-column-4').value : '';
-let column5 = document.getElementById('custom-field-column-5') ? document.getElementById('custom-field-column-5').value : '';
-let column6 = document.getElementById('custom-field-column-6') ? document.getElementById('custom-field-column-6').value : '';
-let column7 = document.getElementById('custom-field-column-7') ? document.getElementById('custom-field-column-7').value : '';
-let column8 = document.getElementById('custom-field-column-8') ? document.getElementById('custom-field-column-8').value : '';
-let column9 = document.getElementById('custom-field-column-9') ? document.getElementById('custom-field-column-9').value : '';
-let column10 = document.getElementById('custom-field-column-10') ? document.getElementById('custom-field-column-10').value : '';
-let column11 = document.getElementById('custom-field-column-11') ? document.getElementById('custom-field-column-11').value : '';
-let column12 = document.getElementById('custom-field-column-12') ? document.getElementById('custom-field-column-12').value : '';
-let column13 = document.getElementById('custom-field-column-13') ? document.getElementById('custom-field-column-13').value : '';
-let column14 = document.getElementById('custom-field-column-14') ? document.getElementById('custom-field-column-14').value : '';
-let column15 = document.getElementById('custom-field-column-15') ? document.getElementById('custom-field-column-15').value : '';
-let column16 = document.getElementById('custom-field-column-16') ? document.getElementById('custom-field-column-16').value : '';
-let column17 = document.getElementById('custom-field-column-17') ? document.getElementById('custom-field-column-17').value : '';
-let column18 = document.getElementById('custom-field-column-18') ? document.getElementById('custom-field-column-18').value : '';
-let column19 = document.getElementById('custom-field-column-19') ? document.getElementById('custom-field-column-19').value : '';
-let column20 = document.getElementById('custom-field-column-20') ? document.getElementById('custom-field-column-20').value : '';
-let column21 = document.getElementById('custom-field-column-21') ? document.getElementById('custom-field-column-21').value : '';
-let column22 = document.getElementById('custom-field-column-22') ? document.getElementById('custom-field-column-22').value : '';
-let column23 = document.getElementById('custom-field-column-23') ? document.getElementById('custom-field-column-23').value : '';
-let column24 = document.getElementById('custom-field-column-24') ? document.getElementById('custom-field-column-24').value : '';
-let column25 = document.getElementById('custom-field-column-25') ? document.getElementById('custom-field-column-25').value : '';
-let column26 = document.getElementById('custom-field-column-26') ? document.getElementById('custom-field-column-26').value : '';
+              let url = document.getElementById('sheet_url').value;
+              let cronTime = document.getElementById('cron-time').value;
+              let post_id_column = document.getElementById('post-id-column').value;
+              let post_title_column = document.getElementById('post-title-column').value;
+              let post_content_column = document.getElementById('post-content-column').value;
+              let postType = document.getElementById('post-type').value;
+              let category = document.getElementById('cateory-name').value;
+              let post_category_column = document.getElementById('post-category-column').value;
+              let tag_name = document.getElementById('tag-name').value;
+              let post_tags_column = document.getElementById('post-tags-column').value;
+              let field1 = document.getElementById('custom-field-1') ? document.getElementById('custom-field-1').value : '';
+              let field2 = document.getElementById('custom-field-2') ? document.getElementById('custom-field-2').value : '';
+              let field3 = document.getElementById('custom-field-3') ? document.getElementById('custom-field-3').value : '';
+              let field4 = document.getElementById('custom-field-4') ? document.getElementById('custom-field-4').value : '';
+              let field5 = document.getElementById('custom-field-5') ? document.getElementById('custom-field-5').value : '';
+              let field6 = document.getElementById('custom-field-6') ? document.getElementById('custom-field-6').value : '';
+              let field7 = document.getElementById('custom-field-7') ? document.getElementById('custom-field-7').value : '';
+              let field8 = document.getElementById('custom-field-8') ? document.getElementById('custom-field-8').value : '';
+              let field9 = document.getElementById('custom-field-9') ? document.getElementById('custom-field-9').value : '';
+              let field10 = document.getElementById('custom-field-10') ? document.getElementById('custom-field-10').value : '';
+              let field11 = document.getElementById('custom-field-11') ? document.getElementById('custom-field-11').value : '';
+              let field12 = document.getElementById('custom-field-12') ? document.getElementById('custom-field-12').value : '';
+              let field13 = document.getElementById('custom-field-13') ? document.getElementById('custom-field-13').value : '';
+              let field14 = document.getElementById('custom-field-14') ? document.getElementById('custom-field-14').value : '';
+              let field15 = document.getElementById('custom-field-15') ? document.getElementById('custom-field-15').value : '';
+              let field16 = document.getElementById('custom-field-16') ? document.getElementById('custom-field-16').value : '';
+              let field17 = document.getElementById('custom-field-17') ? document.getElementById('custom-field-17').value : '';
+              let field18 = document.getElementById('custom-field-18') ? document.getElementById('custom-field-18').value : '';
+              let field19 = document.getElementById('custom-field-19') ? document.getElementById('custom-field-19').value : '';
+              let field20 = document.getElementById('custom-field-20') ? document.getElementById('custom-field-20').value : '';
+              let field21 = document.getElementById('custom-field-21') ? document.getElementById('custom-field-21').value : '';
+              let field22 = document.getElementById('custom-field-22') ? document.getElementById('custom-field-22').value : '';
+              let field23 = document.getElementById('custom-field-23') ? document.getElementById('custom-field-23').value : '';
+              let field24 = document.getElementById('custom-field-24') ? document.getElementById('custom-field-24').value : '';
+              let field25 = document.getElementById('custom-field-25') ? document.getElementById('custom-field-25').value : '';
+              let field26 = document.getElementById('custom-field-26') ? document.getElementById('custom-field-26').value : '';
+              let column1 = document.getElementById('custom-field-column-1') ? document.getElementById('custom-field-column-1').value : '';
+              let column2 = document.getElementById('custom-field-column-2') ? document.getElementById('custom-field-column-2').value : '';
+              let column3 = document.getElementById('custom-field-column-3') ? document.getElementById('custom-field-column-3').value : '';
+              let column4 = document.getElementById('custom-field-column-4') ? document.getElementById('custom-field-column-4').value : '';
+              let column5 = document.getElementById('custom-field-column-5') ? document.getElementById('custom-field-column-5').value : '';
+              let column6 = document.getElementById('custom-field-column-6') ? document.getElementById('custom-field-column-6').value : '';
+              let column7 = document.getElementById('custom-field-column-7') ? document.getElementById('custom-field-column-7').value : '';
+              let column8 = document.getElementById('custom-field-column-8') ? document.getElementById('custom-field-column-8').value : '';
+              let column9 = document.getElementById('custom-field-column-9') ? document.getElementById('custom-field-column-9').value : '';
+              let column10 = document.getElementById('custom-field-column-10') ? document.getElementById('custom-field-column-10').value : '';
+              let column11 = document.getElementById('custom-field-column-11') ? document.getElementById('custom-field-column-11').value : '';
+              let column12 = document.getElementById('custom-field-column-12') ? document.getElementById('custom-field-column-12').value : '';
+              let column13 = document.getElementById('custom-field-column-13') ? document.getElementById('custom-field-column-13').value : '';
+              let column14 = document.getElementById('custom-field-column-14') ? document.getElementById('custom-field-column-14').value : '';
+              let column15 = document.getElementById('custom-field-column-15') ? document.getElementById('custom-field-column-15').value : '';
+              let column16 = document.getElementById('custom-field-column-16') ? document.getElementById('custom-field-column-16').value : '';
+              let column17 = document.getElementById('custom-field-column-17') ? document.getElementById('custom-field-column-17').value : '';
+              let column18 = document.getElementById('custom-field-column-18') ? document.getElementById('custom-field-column-18').value : '';
+              let column19 = document.getElementById('custom-field-column-19') ? document.getElementById('custom-field-column-19').value : '';
+              let column20 = document.getElementById('custom-field-column-20') ? document.getElementById('custom-field-column-20').value : '';
+              let column21 = document.getElementById('custom-field-column-21') ? document.getElementById('custom-field-column-21').value : '';
+              let column22 = document.getElementById('custom-field-column-22') ? document.getElementById('custom-field-column-22').value : '';
+              let column23 = document.getElementById('custom-field-column-23') ? document.getElementById('custom-field-column-23').value : '';
+              let column24 = document.getElementById('custom-field-column-24') ? document.getElementById('custom-field-column-24').value : '';
+              let column25 = document.getElementById('custom-field-column-25') ? document.getElementById('custom-field-column-25').value : '';
+              let column26 = document.getElementById('custom-field-column-26') ? document.getElementById('custom-field-column-26').value : '';
 
-             
+
               // Create FormData object and append data
               let formData = new FormData();
               formData.append('sheet_url', extractSheetId(url));
@@ -786,7 +788,9 @@ let column26 = document.getElementById('custom-field-column-26') ? document.getE
               formData.append('post_content_column', post_content_column);
               formData.append('post_type', postType);
               formData.append('category', category);
+              formData.append('post_category_column', post_category_column);
               formData.append('tag_name', tag_name);
+              formData.append('post_tags_column', post_tags_column);
 
               try {
                 formData.append('field1', field1);

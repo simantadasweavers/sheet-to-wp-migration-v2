@@ -61,7 +61,9 @@ function save_settings()
     $post_content_column = sanitize_text_field($_POST['post_content_column']);
     $post_type = sanitize_text_field($_POST['post_type']);
     $post_category = sanitize_text_field($_POST['category']);
+    $post_category_column = sanitize_text_field($_POST['post_category_column']);
     $post_tag_name = sanitize_text_field($_POST['tag_name']);
+    $post_tags_column = sanitize_text_field($_POST['post_tags_column']);
 
     try {
         $field1 = sanitize_text_field($_POST['field1']);
@@ -185,7 +187,9 @@ function save_settings()
         'post_content_column' => $post_content_column,
         'post_type' => $post_type,
         'post_category' => $post_category,
+        'post_category_column' => $post_category_column,
         'post_tag' => $post_tag_name,
+        'post_tag_column' => $post_tags_column,
         "meta_box_1" => $field1,
         "meta_box_2" => $field2,
         "meta_box_3" => $field3,
@@ -295,7 +299,7 @@ try {
 }
 
 // Handle AJAX request for migration
-add_action('wp_ajax_posts_migration', 'handle_posts_migration');
+add_action('wp_ajax_posts_migration', 'posts_migration');
 function handle_posts_migration()
 {
     try {
@@ -331,7 +335,7 @@ function handle_posts_migration()
 
 
 // Hook for custom posts migration
-add_action('custom_posts_migration', 'posts_migration');
+// add_action('custom_posts_migration', 'posts_migration');
 function posts_migration()
 {
 
@@ -422,7 +426,9 @@ function posts_migration()
             // $string_var = json_encode($data);
             // error_log("array size: {$string_var} ", 3, PLUGIN_LOG_FILE);
 
+
             /**  Process each row and insert/update posts */
+            
             // assigning letters by the integer, for arranging into db-row
             $int_to_letter = [];
             $int_to_letter = [
@@ -455,18 +461,17 @@ function posts_migration()
             ];
             $currentRow = 2; // Reset currentRow counter for sheet update
 
-
             foreach ($data as $data) {
 
-                // if post title present -> col-a 
-                if (!empty($data['col-a'])) {
+                // if POST TITLE present 
+                if (!empty($data["col-{$int_to_letter[$db_row->post_title_column]}"])) {
 
-                    // col-e -> post_id 
-                    if ($data['col-e']) {
+                    // POST ID 
+                    if ($data["col-{$int_to_letter[$db_row->post_id_column]}"]) {
 
                         if ($db_row->post_category) {
                             // Managing categories (custom taxonomy or default)
-                            $parts = explode(",", $data['col-c']);
+                            $parts = explode(",", $data["col-{$int_to_letter[$db_row->post_category_column]}"] );
                             $arr = array();
 
                             foreach ($parts as $cat) {
@@ -495,9 +500,9 @@ function posts_migration()
                         try {
                             // updaing post fields by post id
                             $post_array = array(
-                                'ID' => $data['col-e'],
-                                'post_title' => $data['col-a'],
-                                'post_content' => $data['col-b'],
+                                'ID' => $data["col-{$int_to_letter[$db_row->post_id_column]}"],
+                                'post_title' => $data["col-{$int_to_letter[$db_row->post_title_column]}"],
+                                'post_content' => $data["col-{$int_to_letter[$db_row->post_content_column]}"],
                             );
                             wp_update_post($post_array);
                         } catch (Exception $e) {
@@ -743,6 +748,10 @@ function posts_migration()
                 }
                 $currentRow++;
             }
+
+
+
+
         } catch (Exception $e) {
             echo $e->getMessage();
         }
