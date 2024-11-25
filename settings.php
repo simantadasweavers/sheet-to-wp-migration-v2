@@ -690,7 +690,7 @@ $int_to_letter = [
       jQuery('#submit-btn').on('click', function (e) {
         e.preventDefault(); // Prevent default form submission
 
-        console.warn(document.getElementById('custom-field-1').value + "  " + document.getElementById('custom-field-column-1').value);
+        // console.warn(document.getElementById('custom-field-1').value + "  " + document.getElementById('custom-field-column-1').value);
 
         // checkFields();
 
@@ -704,16 +704,29 @@ $int_to_letter = [
           reader.onload = function (e) {
             try {
               let jsonData = JSON.parse(e.target.result);
-              let url = document.getElementById('sheet_url').value;
-              let cronTime = document.getElementById('cron-time').value;
-              let post_id_column = document.getElementById('post-id-column').value;
-              let post_title_column = document.getElementById('post-title-column').value;
-              let post_content_column = document.getElementById('post-content-column').value;
-              let postType = document.getElementById('post-type').value;
-              let category = document.getElementById('cateory-name').value;
-              let post_category_column = document.getElementById('post-category-column').value;
-              let tag_name = document.getElementById('tag-name').value;
-              let post_tags_column = document.getElementById('post-tags-column').value;
+              
+              // let url = document.getElementById('sheet_url').value;
+              // let cronTime = document.getElementById('cron-time').value;
+              // let post_id_column = document.getElementById('post-id-column').value;
+              // let post_title_column = document.getElementById('post-title-column').value;
+              // let post_content_column = document.getElementById('post-content-column').value;
+              // let postType = document.getElementById('post-type').value;
+              // let category = document.getElementById('cateory-name').value;
+              // let post_category_column = document.getElementById('post-category-column').value;
+              // let tag_name = document.getElementById('tag-name').value;
+              // let post_tags_column = document.getElementById('post-tags-column').value;
+
+              let url = document.getElementById('sheet_url') ? document.getElementById('sheet_url').value : '';
+              let cronTime = document.getElementById('cron-time') ? document.getElementById('cron-time').value : '';
+              let post_id_column = document.getElementById('post-id-column') ? document.getElementById('post-id-column').value : '';
+              let post_title_column = document.getElementById('post-title-column') ? document.getElementById('post-title-column').value : '';
+              let post_content_column = document.getElementById('post-content-column') ? document.getElementById('post-content-column').value : '';
+              let postType = document.getElementById('post-type') ? document.getElementById('post-type').value : '';
+              let category = document.getElementById('cateory-name') ? document.getElementById('cateory-name').value : '';
+              let post_category_column = document.getElementById('post-category-column') ? document.getElementById('post-category-column').value : '';
+              let tag_name = document.getElementById('tag-name') ? document.getElementById('tag-name').value : '';
+              let post_tags_column = document.getElementById('post-tags-column') ? document.getElementById('post-tags-column').value : '';
+
               let field1 = document.getElementById('custom-field-1') ? document.getElementById('custom-field-1').value : '';
               let field2 = document.getElementById('custom-field-2') ? document.getElementById('custom-field-2').value : '';
               let field3 = document.getElementById('custom-field-3') ? document.getElementById('custom-field-3').value : '';

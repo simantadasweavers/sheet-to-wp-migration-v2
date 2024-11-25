@@ -2,10 +2,10 @@
 /*
  * Plugin Name:       Google Sheet to WP Post migration
  * Description:       This tool able to fetch google sheet data and migrate them into wordpress posts easily.
- * Version:           1.1.1
+ * Version:           1.1.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
- * Author:            Shimanta Das(Abhimanyu Saha Team)
+ * Author:            Shimanta Das
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
  * Text Domain:       google sheet, post migration,
@@ -135,11 +135,11 @@ try {
 function sheet_to_wp_migration_options_page()
 {
     $plugin_slug = "sheet_to_wp";
-    add_menu_page('Sheet to WP', 'Sheet to WP', 'edit', $plugin_slug, null, 'dashicons-nametag', '58', );
+    add_menu_page('Sheet to WP', 'Sheet to WP', 'edit', $plugin_slug, null, 'dashicons-media-spreadsheet', '58', );
     add_submenu_page(
         $plugin_slug,
-        'Auth Settings',
-        'Auth Settings',
+        'Settings',
+        'Settings',
         'manage_options',
         'sheet_to_wp_settings',
         'sheet_to_wp_settings'
@@ -148,8 +148,8 @@ function sheet_to_wp_migration_options_page()
 
     add_submenu_page(
         $plugin_slug,
-        'Migration',
-        'Migration',
+        'Run Migration',
+        'Run Migration',
         'manage_options',
         'sheet_to_wp_migrate',
         'sheet_to_wp_migrate'

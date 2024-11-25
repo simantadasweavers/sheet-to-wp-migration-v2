@@ -77,7 +77,7 @@
 
                 let formData = new FormData();
                 formData.append('action', 'posts_migration'); // Add action for AJAX
-                // formData.append('schedule_migration', true);
+                formData.append('schedule_migration', true);
 
                 jQuery.ajax({
                     type: "POST",

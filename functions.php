@@ -1,40 +1,5 @@
 <?php
 
-// LOCAL VARIABLES FOR COLUMN ID's
-$SHEET_POST_ID_COLUMN = NULL;
-$SHEET_POST_TITLE_COLUMN = NULL;
-$SHEET_POST_CONTENT_COLUMN = NULL;
-$SHEET_POST_CATEGORY_COLUMN = NULL;
-$SHEET_POST_TAGS_COLUMN = NULL;
-$SHEET_POST_META_BOX_1_COLUMN = NULL;
-$SHEET_POST_META_BOX_2_COLUMN = NULL;
-$SHEET_POST_META_BOX_3_COLUMN = NULL;
-$SHEET_POST_META_BOX_4_COLUMN = NULL;
-$SHEET_POST_META_BOX_5_COLUMN = NULL;
-$SHEET_POST_META_BOX_6_COLUMN = NULL;
-$SHEET_POST_META_BOX_7_COLUMN = NULL;
-$SHEET_POST_META_BOX_8_COLUMN = NULL;
-$SHEET_POST_META_BOX_9_COLUMN = NULL;
-$SHEET_POST_META_BOX_10_COLUMN = NULL;
-$SHEET_POST_META_BOX_11_COLUMN = NULL;
-$SHEET_POST_META_BOX_12_COLUMN = NULL;
-$SHEET_POST_META_BOX_13_COLUMN = NULL;
-$SHEET_POST_META_BOX_14_COLUMN = NULL;
-$SHEET_POST_META_BOX_15_COLUMN = NULL;
-$SHEET_POST_META_BOX_16_COLUMN = NULL;
-$SHEET_POST_META_BOX_17_COLUMN = NULL;
-$SHEET_POST_META_BOX_18_COLUMN = NULL;
-$SHEET_POST_META_BOX_19_COLUMN = NULL;
-$SHEET_POST_META_BOX_20_COLUMN = NULL;
-$SHEET_POST_META_BOX_21_COLUMN = NULL;
-$SHEET_POST_META_BOX_22_COLUMN = NULL;
-$SHEET_POST_META_BOX_23_COLUMN = NULL;
-$SHEET_POST_META_BOX_24_COLUMN = NULL;
-$SHEET_POST_META_BOX_25_COLUMN = NULL;
-$SHEET_POST_META_BOX_26_COLUMN = NULL;
-
-
-
 add_action('wp_ajax_save_settings', 'save_settings');
 function save_settings()
 {
@@ -47,7 +12,7 @@ function save_settings()
     $account_type = sanitize_text_field($_POST['account_type']);
     $project_id = sanitize_text_field($_POST['project_id']);
     $private_key_id = $_POST['private_key_id'];
-    $private_key = $_POST['private_key']; // Use wp_slash for multi-line text
+    $private_key = $_POST['private_key'];
     $client_email = sanitize_email($_POST['client_email']);
     $client_id = sanitize_text_field($_POST['client_id']);
     $auth_uri = esc_url_raw($_POST['auth_uri']);
@@ -126,8 +91,6 @@ function save_settings()
     } catch (Exception $e) {
         echo $e->getMessage();
     }
-
-    // echo $column1."  ".$field1;
 
     /**** checking google sheet connection ****/
     try {
@@ -299,7 +262,7 @@ try {
 }
 
 // Handle AJAX request for migration
-add_action('wp_ajax_posts_migration', 'posts_migration');
+add_action('wp_ajax_posts_migration', 'handle_posts_migration');
 function handle_posts_migration()
 {
     try {
@@ -335,7 +298,7 @@ function handle_posts_migration()
 
 
 // Hook for custom posts migration
-// add_action('custom_posts_migration', 'posts_migration');
+add_action('custom_posts_migration', 'posts_migration');
 function posts_migration()
 {
 
@@ -423,12 +386,8 @@ function posts_migration()
                 }
             }
 
-            // $string_var = json_encode($data);
-            // error_log("array size: {$string_var} ", 3, PLUGIN_LOG_FILE);
-
-
             /**  Process each row and insert/update posts */
-            
+
             // assigning letters by the integer, for arranging into db-row
             $int_to_letter = [];
             $int_to_letter = [
@@ -471,7 +430,7 @@ function posts_migration()
 
                         if ($db_row->post_category) {
                             // Managing categories (custom taxonomy or default)
-                            $parts = explode(",", $data["col-{$int_to_letter[$db_row->post_category_column]}"] );
+                            $parts = explode(",", $data["col-{$int_to_letter[$db_row->post_category_column]}"]);
                             $arr = array();
 
                             foreach ($parts as $cat) {
@@ -555,238 +514,139 @@ function posts_migration()
                             }
                         }
 
-                        // updating meta box 1
-                        if ($db_row->meta_box_1) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_1), $data["col-{$int_to_letter[$db_row->meta_box_1_column]}"] );
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                        try {
+                            // updating meta box 1
+                            if ($db_row->meta_box_1) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_1), $data["col-{$int_to_letter[$db_row->meta_box_1_column]}"]);
                             }
-                        }
 
-                        // updating meta box 2
-                        if ($db_row->meta_box_2) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_2), $data["col-{$int_to_letter[$db_row->meta_box_2_column]}"] );
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 2
+                            if ($db_row->meta_box_2) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_2), $data["col-{$int_to_letter[$db_row->meta_box_2_column]}"]);
                             }
-                        }
 
-                        // updating meta box 3
-                        if ($db_row->meta_box_3) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_3), $data["col-{$int_to_letter[$db_row->post_id_column]}"] );
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 3
+                            if ($db_row->meta_box_3) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_3), $data["col-{$int_to_letter[$db_row->meta_box_3_column]}"]);
                             }
-                        }
 
-                        // updating meta box 4
-                        if ($db_row->meta_box_4) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_4), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 4
+                            if ($db_row->meta_box_4) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_4), $data["col-{$int_to_letter[$db_row->meta_box_4_column]}"]);
                             }
-                        }
 
-                        // updating meta box 5
-                        if ($db_row->meta_box_5) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_5), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 5
+                            if ($db_row->meta_box_5) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_5), $data["col-{$int_to_letter[$db_row->meta_box_5_column]}"]);
                             }
-                        }
 
-                        // updating meta box 6
-                        if ($db_row->meta_box_6) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_6), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 6
+                            if ($db_row->meta_box_6) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_6), $data["col-{$int_to_letter[$db_row->meta_box_6_column]}"]);
                             }
-                        }
 
-                        // updating meta box 7
-                        if ($db_row->meta_box_7) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_7), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 7
+                            if ($db_row->meta_box_7) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_7), $data["col-{$int_to_letter[$db_row->meta_box_7_column]}"]);
                             }
-                        }
 
-                        // updating meta box 8
-                        if ($db_row->meta_box_8) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_8), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 8
+                            if ($db_row->meta_box_8) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_8), $data["col-{$int_to_letter[$db_row->meta_box_8_column]}"]);
                             }
-                        }
 
-                        // updating meta box 9
-                        if ($db_row->meta_box_9) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_9), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 9
+                            if ($db_row->meta_box_9) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_9), $data["col-{$int_to_letter[$db_row->meta_box_9_column]}"]);
                             }
-                        }
 
-                        // updating meta box 10
-                        if ($db_row->meta_box_10) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_10), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 10
+                            if ($db_row->meta_box_10) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_10), $data["col-{$int_to_letter[$db_row->meta_box_10_column]}"]);
                             }
-                        }
 
-                        // updating meta box 11
-                        if ($db_row->meta_box_11) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_11), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 11
+                            if ($db_row->meta_box_11) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_11), $data["col-{$int_to_letter[$db_row->meta_box_11_column]}"]);
                             }
-                        }
 
-                        // updating meta box 12
-                        if ($db_row->meta_box_12) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_12), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 12
+                            if ($db_row->meta_box_12) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_12), $data["col-{$int_to_letter[$db_row->meta_box_12_column]}"]);
                             }
-                        }
 
-                        // updating meta box 13
-                        if ($db_row->meta_box_13) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_13), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 13
+                            if ($db_row->meta_box_13) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_13), $data["col-{$int_to_letter[$db_row->meta_box_13_column]}"]);
                             }
-                        }
 
-                        // updating meta box 14
-                        if ($db_row->meta_box_14) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_14), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 14
+                            if ($db_row->meta_box_14) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_14), $data["col-{$int_to_letter[$db_row->meta_box_14_column]}"]);
                             }
-                        }
 
-                        // updating meta box 15
-                        if ($db_row->meta_box_15) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_15), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 15
+                            if ($db_row->meta_box_15) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_15), $data["col-{$int_to_letter[$db_row->meta_box_15_column]}"]);
                             }
-                        }
 
-                        // updating meta box 16
-                        if ($db_row->meta_box_16) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_16), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 16
+                            if ($db_row->meta_box_16) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_16), $data["col-{$int_to_letter[$db_row->meta_box_16_column]}"]);
                             }
-                        }
 
-                        // updating meta box 17
-                        if ($db_row->meta_box_17) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_17), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 17
+                            if ($db_row->meta_box_17) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_17), $data["col-{$int_to_letter[$db_row->meta_box_17_column]}"]);
                             }
-                        }
 
-                        // updating meta box 18
-                        if ($db_row->meta_box_18) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_18), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 18
+                            if ($db_row->meta_box_18) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_18), $data["col-{$int_to_letter[$db_row->meta_box_18_column]}"]);
                             }
-                        }
 
-                        // updating meta box 19
-                        if ($db_row->meta_box_19) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_19), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 19
+                            if ($db_row->meta_box_19) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_19), $data["col-{$int_to_letter[$db_row->meta_box_19_column]}"]);
                             }
-                        }
 
-                        // updating meta box 20
-                        if ($db_row->meta_box_20) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_20), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 20
+                            if ($db_row->meta_box_20) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_20), $data["col-{$int_to_letter[$db_row->meta_box_20_column]}"]);
                             }
-                        }
 
-                        // updating meta box 21
-                        if ($db_row->meta_box_21) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_21), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 21
+                            if ($db_row->meta_box_21) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_21), $data["col-{$int_to_letter[$db_row->meta_box_21_column]}"]);
                             }
-                        }
 
-                        // updating meta box 22
-                        if ($db_row->meta_box_22) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_22), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 22
+                            if ($db_row->meta_box_22) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_22), $data["col-{$int_to_letter[$db_row->meta_box_22_column]}"]);
                             }
-                        }
 
-                        // updating meta box 23
-                        if ($db_row->meta_box_23) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_23), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 23
+                            if ($db_row->meta_box_23) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_23), $data["col-{$int_to_letter[$db_row->meta_box_23_column]}"]);
                             }
-                        }
 
-                        // updating meta box 24
-                        if ($db_row->meta_box_24) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_24), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 24
+                            if ($db_row->meta_box_24) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_24), $data["col-{$int_to_letter[$db_row->meta_box_24_column]}"]);
                             }
-                        }
 
-                        // updating meta box 25
-                        if ($db_row->meta_box_25) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_25), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 25
+                            if ($db_row->meta_box_25) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_25), $data["col-{$int_to_letter[$db_row->meta_box_25_column]}"]);
                             }
-                        }
 
-                        // updating meta box 26
-                        if ($db_row->meta_box_26) {
-                            try {
-                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_26), $data["col-{$int_to_letter[$db_row->post_id_column]}"]);
-                            } catch (Exception $e) {
-                                echo $e->getMessage();
+                            // updating meta box 26
+                            if ($db_row->meta_box_26) {
+                                update_post_meta($data["col-{$int_to_letter[$db_row->post_id_column]}"], trim($db_row->meta_box_26), $data["col-{$int_to_letter[$db_row->meta_box_26_column]}"]);
                             }
+
+                        } catch (Exception $e) {
+                            echo $e->getMessage();
                         }
 
 
@@ -795,8 +655,7 @@ function posts_migration()
 
                         // POST CATEGORY
                         if ($db_row->post_category) {
-                            // Managing categories (custom taxonomy or default)
-                            $parts = explode(",", $data['col-c']);
+                            $parts = explode(",", $data["col-{$int_to_letter[$db_row->post_category_column]}"]);
                             $arr = array();
 
                             foreach ($parts as $cat) {
@@ -825,25 +684,23 @@ function posts_migration()
                         try {
                             if ($arr == NULL) {
                                 $new_post = array(
-                                    'post_title' => $data['col-a'],
-                                    'post_content' => $data['col-b'],
+                                    'post_title' => $data["col-{$int_to_letter[$db_row->post_title_column]}"],
+                                    'post_content' => $data["col-{$int_to_letter[$db_row->post_content_column]}"],
                                     'post_status' => 'publish',
                                     'post_type' => $post_type,
                                 );
 
                                 $post_id = wp_insert_post($new_post);
                             } else {
-                                // $post_category = trim($db_row->post_category);
-                                $new_post = array(
-                                    'post_title' => $data['col-a'],
-                                    'post_content' => $data['col-b'],
-                                    'post_status' => 'publish',
-                                    'post_type' => $post_type,
-                                );
-
-                                $post_id = wp_insert_post($new_post);
-
                                 try {
+                                    $new_post = array(
+                                        'post_title' => $data["col-{$int_to_letter[$db_row->post_title_column]}"],
+                                        'post_content' => $data["col-{$int_to_letter[$db_row->post_content_column]}"],
+                                        'post_status' => 'publish',
+                                        'post_type' => $post_type,
+                                    );
+                                    $post_id = wp_insert_post($new_post);
+
                                     wp_set_post_terms($post_id, $arr, trim($db_row->post_category));
                                 } catch (Exception $e) {
                                     echo $e->getMessage();
@@ -857,7 +714,7 @@ function posts_migration()
                         // POST TAGS
                         if ($db_row->post_tag) {
                             // Managing tags (can be default 'post_tag' or a custom taxonomy)
-                            $parts = explode(",", $data['col-d']);
+                            $parts = explode(",", $data["col-{$int_to_letter[$db_row->post_tag_column]}"]);
                             $arr = array();
 
                             foreach ($parts as $tag) {
@@ -895,15 +752,15 @@ function posts_migration()
                         // end managing of tags for post type
 
                         try {
-                            // Update Google Sheet column E with the post ID only if it is empty
-                            $updateRange = 'E' . $currentRow;
+                            // Update Google Sheet column with the post ID only if it is empty
+                            $updateRange = "{$int_to_letter[$db_row->post_id_column]}" . $currentRow;
                             $updateBody = new \Google_Service_Sheets_ValueRange([
                                 'range' => $updateRange,
                                 'majorDimension' => 'ROWS',
                                 'values' => [[$post_id]], // This is where you insert the post ID
                             ]);
 
-                            // Update the sheet only if col-e (post ID) is empty
+                            // Update the sheet only if (post ID) is empty
                             $sheets->spreadsheets_values->update(
                                 $spreadsheetId,
                                 $updateRange,
@@ -918,15 +775,15 @@ function posts_migration()
                     $post_id = 0;
 
                     try {
-                        // Update Google Sheet column E with the post ID only if it is empty
-                        $updateRange = 'E' . $currentRow;
+                        // Update Google Sheet column with the post ID only if it is empty
+                        $updateRange = "{$int_to_letter[$db_row->post_id_column]}" . $currentRow;
                         $updateBody = new \Google_Service_Sheets_ValueRange([
                             'range' => $updateRange,
                             'majorDimension' => 'ROWS',
                             'values' => [[$post_id]], // This is where you insert the post ID
                         ]);
 
-                        // Update the sheet only if col-e (post ID) is empty
+                        // Update the sheet only if (post ID) is empty
                         $sheets->spreadsheets_values->update(
                             $spreadsheetId,
                             $updateRange,
